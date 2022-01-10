@@ -6,7 +6,7 @@
 /*   By: jbyeon <jbyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 15:59:17 by jbyeon            #+#    #+#             */
-/*   Updated: 2022/01/07 16:26:08 by jbyeon           ###   ########.fr       */
+/*   Updated: 2022/01/10 15:13:43 by jbyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	main(int argc, char **argv)
 {
-	printf("argc : %d\n", argc);
-	parse(argc, argv);
+	t_table	*table;
+
+	if (parse(argc, argv) == FALSE)
+		return (FALSE);
+	return (TRUE);
 }
