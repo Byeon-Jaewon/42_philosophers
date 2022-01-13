@@ -6,7 +6,7 @@
 /*   By: jbyeon <jbyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:07:56 by jbyeon            #+#    #+#             */
-/*   Updated: 2022/01/10 14:59:46 by jbyeon           ###   ########.fr       */
+/*   Updated: 2022/01/13 18:13:52 by jbyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,31 @@ int	check_argument_int(char *s)
 	return (TRUE);
 }
 
-int	check_digit(char *s)
+void	print_action(t_table *table, int philo_id, char *str)
+{
+	pthread_mutex_lock(&(table->printing));
+	if (!(table->die))
+	{
+		printf("%lli ", get_current_time() - table->start_time);
+		printf("%i ", philo_id + 1);
+		printf("%s\n", str);
+	}
+	pthread_mutex_unlock(&(table->printing));
+	return ;
+}
+
+void	check_all_philo_eat(t_table *table, t_philo *philo)
 {
 	int		i;
 
 	i = 0;
-	while (s[i])
+	while ((table->number_of_times_each_philosopher_must_eat != -1)
+		&& (i < table->number_of_philosopers)
+		&& (philo[i].eat_count
+			> table->number_of_times_each_philosopher_must_eat))
 	{
-		if (ft_isdigit(s[i]) == FALSE)
-			return (FALSE);
 		i++;
 	}
-	return (TRUE);
+	if (i == table->number_of_philosopers)
+		table->eat_check = 1;
 }

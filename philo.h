@@ -6,7 +6,7 @@
 /*   By: jbyeon <jbyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 15:58:13 by jbyeon            #+#    #+#             */
-/*   Updated: 2022/01/10 15:08:23 by jbyeon           ###   ########.fr       */
+/*   Updated: 2022/01/13 19:06:36 by jbyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_philo
 	int				id;
 	int				left_fork;
 	int				right_fork;
-	long long		check_die_time;
+	long long		last_eat_time;
 	int				eat_count;
 	struct s_table	*table;
 	pthread_t		thread_id;
@@ -43,18 +43,24 @@ typedef struct s_table
 	int					die;
 	int					eat_check;
 	long long			start_time;
-	pthread_mutex_t		*forks;
+	pthread_mutex_t		*fork;
 	pthread_mutex_t		eating;
-	pthread_mutex_t		write;
+	pthread_mutex_t		printing;
 	t_philo				*philo;
 }				t_table;
 
-int	parse(int argc, char **argv);
+int			parse(int argc, char **argv);
+int			check_argument_int(char *s);
+int			ft_atoi(const char *nptr);
+int			check_digit(char *s);
+int			error(char *msg);
+void		sleep_philo(t_table *table);
+void		eat_philo(t_table *table);
+int			start_dining(t_table *table, t_philo *philo);
+int			table_input(t_table *table, int argc, char **argv);
+void		print_action(t_table *table, int philo_id, char *str);
+void		check_all_philo_eat(t_table *table, t_philo *philo);
 
-int	check_argument_int(char *s);
-
-int	check_digit(char *s);
-
-int	error(char *msg);
+long long	get_current_time(void);
 
 #endif
