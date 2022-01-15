@@ -6,7 +6,7 @@
 /*   By: jbyeon <jbyeon@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:45:52 by jbyeon            #+#    #+#             */
-/*   Updated: 2022/01/13 18:47:04 by jbyeon           ###   ########.fr       */
+/*   Updated: 2022/01/13 19:09:03 by jbyeon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ void	stop_dining(t_table *table, t_philo *philo)
 
 	i = 0;
 	while (i < table->number_of_philosopers)
+	{
+		pthread_mutex_unlock(&(table->fork[i]));
 		pthread_mutex_destroy(&(table->fork[i++]));
+	}
 	i = 0;
 	while (i < table->number_of_philosopers)
 		pthread_join(philo[i++].thread_id, NULL);
